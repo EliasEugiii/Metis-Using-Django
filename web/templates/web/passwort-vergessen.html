@@ -1,0 +1,18 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Passwort ändern {% endblock %}
+
+{% block authForm %}
+
+    <div class="container pt-5" style="text-align: center; color: white">
+      <h1>Passwort zurücksetzen</h1>
+        <br>
+        {% if request.user.is_authenticated %}
+            <h4>Liebe/r {{request.user.username}}</h4>
+        {% else %}
+            <h4>Lieber User</h4>
+        {% endif %}
+      Du hast vermutlich das Passwort vergessen oder möchtest es ändern? <br> Im Moment gibt es noch keine automatische Funktion, welche das Passwort ändernt. <br> Sie können sich dafür direkt mit mir in Verbindung setzen, dann finden wir eine Lösung. :) <br> <br> Viel Spass beim Lernen! :) <br><br><br> Liebe Grüsse <br> Elias Eugster
+    </div>
+
+{% endblock %}

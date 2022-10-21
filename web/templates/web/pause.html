@@ -1,0 +1,23 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Pause {% endblock %}
+
+{% block authForm %}
+
+    <div class="container pt-5" style="color: white; text-align: center;">
+      <table class="table table-dark table-hover" style=" width: 100%;">
+        <thead>
+          <tr>
+
+            <th scope="col">#</th>
+            <th scope="col">#</th>
+
+          </tr>
+        </thead>
+        <tbody>
+            {{ html_stats | safe }}
+        </tbody>
+      </table>
+    </div>
+
+{% endblock %}

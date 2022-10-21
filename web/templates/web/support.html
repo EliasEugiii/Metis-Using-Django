@@ -1,0 +1,14 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Support {% endblock %}
+
+{% block authForm %}
+
+    <div class="container pt-5" style="color: white; text-align: center;">
+      <h1>Support angefragt von {{ user.username }}</h1>
+      <p> Bei Fragen stehe ich dir gerne zur Verfügung.</p>
+      <p> Du kannst mich gerne über den Forumchat von Metis oder andere Wege wie EMail, Mobil, Persönlich und über SocialMedia erreichen.</p>
+      <a href=" {% url 'web:chat' %} " role="button" class="btn btn-outline-info" style="width: 100%;float:center;">zum ForumChat</a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Metis {% endblock %}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
+    <link rel="stylesheet" href="2/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    {% load static %}
+    <link rel="stylesheet" href={% static 'css/style.css' %}>
+
+    {% load static %}
+</head>
+<body style="font-family: Consolas; background-repeat: no-repeat; min-height: 100vh;; background-size: cover; background-image: url('https://img.freepik.com/vektoren-kostenlos/digitaltechnischer-hintergrund-mit-blauem-und-orangefarbenem-lichteffekt_1017-27423.jpg?w=1380&t=st=1665850669~exp=1665851269~hmac=ca01dd22753b6c60a4c04fdfa13884f3d70be59eef02aed73b281ad920c49d05'">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top p-3">
+        <a class="navbar-brand" href=" {% url 'web:index' %} ">
+            <img src="{% static "img/logo2.png" %}" alt="" width="90" height="auto" class="d-inline-block align-text-top">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+            <ul class="navbar-nav justify-content-centre">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'web:fach' %}">Lernen</a>
+                </li>
+                <div style="width: 2rem;"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Social
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark border border-white" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item link-light" href="{% url 'web:chat' %}">Chat</a></li>
+                            <li><a class="dropdown-item link-light" href="{% url 'web:support' %}">Support</a></li>
+                            <li><a class="dropdown-item link-light" href="{% url 'web:open_sets' %}">Öffentliche Lernsets</a></li>
+                            <li><a class="dropdown-item link-light" href="{% url 'web:testpersonen' %}">Testpersonen Auftrag</a></li>
+                            <li><a class="dropdown-item link-light" href="{% url 'web:SA' %}">SA</a></li>
+                        </ul>
+                    </li>
+                <div style="width: 14rem;"></div>
+                {% if request.user.is_authenticated %} <!-- Prüfen ob user eingelogt ist. -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{request.user.username}}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark border border-white" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item link-light" href="{% url 'web:settings' %}">Einstellungen</a></li>
+                        <li><a class="dropdown-item link-light" href="{% url 'web:fortschritte' username=request.user.username %}">Fortschritte</a></li>
+                        <li><a class="dropdown-item link-light" href="{% url 'web:logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Profil
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark border border-white" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item link-light" href="{% url 'web:login' %}">Login</a></li>
+                        <li><a class="dropdown-item link-light" href="{% url 'web:registrieren' %}">Registrieren</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                <div style="width: 4rem;"></div>
+            </ul>
+        </div>
+    </nav>
+
+
+{% block authForm %}
+    <div class="container-fluid">
+        <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card" style="width: 100%">
+                    <div class="card-header bg-dark border border-white" style="color: white">
+                        <ul class="nav nav-pills card-header-pills">
+                            <li class="nav-item">
+                                <h5>Metis Lerassistent</h5>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-dark bg-dark" href="#">Gurrr</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="list-group list-group-flush" style="width: 100%;">
+                        <div class="container-fluid bg-dark" style="height: 1rem"></div>
+                        <li class="list-group-item bg-dark">
+                            <div class="card mb-3" style="max-width: 100%">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg" class="img-fluid rounded-start" alt="@Jacob Colvin; Walkway; Pexels.com">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body"style="text-align: center">
+                                            <br>
+                                            <h5 class="card-title">Herzlich Willkommen {{request.user.username}}!</h5>
+                                            <br>
+                                            <p style="text-align: block" class="card-text">Schön bist du hier auf der Metis-Webseite. Kurz etwas zu Metis: In meiner SA geht es darum eine eigene Lernapp zu programmieren ohne grosse Vorkenntnisse, um dir, mir und vielen anderen das Lernen angenehmer und effektiver zu machen. Auch du kannst durch ein Feedback helfen Metis noch besser zu machen, doch bis dahin wünsche ich Dir viel Spass beim Lernen :-)</p>
+                                            <p ><br> Liebe Grüsse <br> Metis-Admin</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% block authentifizierung %}
+            <div class="col-sm-4">
+            <div class="card" style="width: 100%; height: 100%;">
+                <div class="card-header bg-dark border border-white">
+                    <ul class="nav nav-pills card-header-pills">
+                        <a class="nav-link link-light" href="{% url 'web:index' %}" style="text-decoration:none;"> <h5 style="color: white"> Loslegen mit Lernen </h5> </a>
+                    </ul>
+                </div>
+                        <ul class="list-group bg-dark list-group-flush bg-dark" style="width: 100%; height: 100%;">
+                            <div class="container-fluid bg-dark" style="height: 1rem"></div>
+                            <li class="list-group-item bg-dark" style="height: 100%;">
+                                <div class="card mb-3" style="max-width: 100%; height: 100%;">
+                                    <div class="row g-0" style="height: 100%;">
+                                        <div class="col-md-12" style="height: 100%;">
+                                            <div class="card-body bg-dark border border-white" style="height: 100%; color:white; text-align: center">
+                                                <h7 class="card-title" style="font-weight:bold; color: orange">Hey {{request.user.username}}</h7>
+                                                <p style="text-align: center">Um mit Metis lernen zu können bedarf es einer kurzer Vorbereitung.</p>
+                                                <a class="nav-link link-info" href="{% url 'web:fach' %}" style="text-decoration:none; font-weight:bold; text-align: center"><h7 class="card-title">Fach erstellen</h7></a>
+                                                <p class="text-align: block">Als erstellt man je nach Bedarf eines oder mehrere Fächer. Fächer verhalten sich wie eine Art Ordner, worin man nachher Lernsets erstellen kann. Dafür klicke einfach auf den "LernenButton".</p>
+                                                <h7 class="card-title" style="font-weight:bold; color: #0dcaf0; text-align: center">Lernsets/Kapitel erstellen</h7>
+                                                <p style="text-align: block"> In eines unserer Fächer können wir ein Lernset oder Kapitel erstellen, in welchem wir später Lernkarten hinzufügen werden. Dafür klicke einfach auf ein Fach, in welchem du ein Lernset erstellen willst.</p>
+                                                <h7 class="card-title" style="font-weight:bold; color: #0dcaf0; text-align: center">Lernkarten erstellen</h7>
+                                                <p style="text-align: block">Nun einfach noch ein paar Wörter hinzugefügt und es kann losgehen.</p>
+                                                <br>
+                                                <a href=" {% url 'web:fach' %} " role="button" class="btn btn-outline-info" style="width: 100%;float:center;">Jetzt lernen</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+                        </ul>
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
+        <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+    </div>
+</div>
+
+{% endblock %}
+    <nav class="navbar fixed-bottom navbar-expand-lg bg-dark" style="height: 10%; ">
+        <div class="container-fluid">
+            <div class="row" style="height: 3rem; width: 100%">
+                    <a class="col-sm-2 bg-dark navbar-brand" href=" {% url 'web:index' %} ">
+                        <div class="container-fluid" style="border-radius: 20% 20% 20% 20%; margin-right: 5rem">
+                            <img src="{% static "img/metis.png" %}" alt="Metis Logo" width="30" height="24" class="d-inline-block align-text-top">
+                        </div>
+                    </a>
+            </div>
+        </div>
+    </nav>
+<script>
+    $(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+</script>
+</body>
+</html>

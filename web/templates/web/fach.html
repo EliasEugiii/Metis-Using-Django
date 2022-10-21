@@ -1,0 +1,108 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Fächer {% endblock %}
+
+{% block authForm %}
+
+<div class="container-fluid" style=" margin-bottom: 100px;">
+    <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card" style="width: 100%;">
+                <div class="card-header bg-dark border border-white" style="color: white">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <h5>Metis Lerassistent</h5>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-dark bg-dark" href="#">Gurrr</a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="list-group list-group-flush" style="width: 100%;">
+                    <div class="container-fluid bg-dark" style="height: 1rem"></div>
+                    <li class="list-group-item bg-dark" style="max-width: 100%; overflow-x: scroll; max-height: 500px; overflow-y: scroll;">
+                                    <table class="table table-dark table-hover" style=" width: 100%;">
+                                        {% if request.user.is_superuser %}
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">User</th>
+                                                    <th scope="col">Fach</th>
+                                                    <th scope="col">Beschreibung</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{ html_fach | safe }}
+                                            </tbody>
+                                        {% else %}
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Fach</th>
+                                                    <th scope="col">Beschreibung</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {{ html_fach | safe }}
+
+                                            </tbody>
+                                        {% endif %}
+                                    </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 100%; height: 100%;">
+                <div class="card-header bg-dark border border-white">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <h5 style="color: white">Neues Fach erstellen</h5>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="list-group bg-dark list-group-flush bg-dark" style="width: 100%; height: 100%;">
+                    <div class="container-fluid bg-dark" style="height: 1rem"></div>
+                    <li class="list-group-item bg-dark" style="height: 100%;">
+                        <div class="card mb-3" style="max-width: 100%; height: 100%;">
+                            <div class="row g-0" style="height: 100%;">
+                                <div class="col-md-12" style="height: 100%;">
+                                    <div class="card-body bg-dark" style="height: 100%;">
+                                        <form id="fach_form" method="post" action="{% url 'web:create_fach' %}">
+                                            <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+                                            <div class="row border border-white bg-dark" style="margin-right: 0.125rem; margin-left: 0.125rem">
+                                                <div class="container-fluid bg-transparent col-sm-12" style="height: 1rem"></div>
+                                                <div class="col">
+                                                    <div class="container-fluid bg-transparent col-sm-12" style="height: 0.25rem"></div>
+                                                    <h5 style="color: white;"> Neues Fach </h5>
+                                                </div>
+                                                <div class="col" style="display: flex; justify-content: end;">
+                                                    <button class="btn btn-outline-success default justify-content-end" name="save" value="save" type="submit">erstellen</button>
+                                                </div>
+                                                <div class="container-fluid bg-transparent col-sm-12" style="height: 1rem"></div>
+                                            </div>
+                                            <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+                                            {% csrf_token %}
+                                            {{ fach_form }}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

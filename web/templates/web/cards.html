@@ -1,0 +1,88 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Sets {% endblock %}
+
+{% block authForm %}
+
+<div class="container-fluid" style=" margin-bottom: 100px;">
+    <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card" style="width: 100%; height: 100%;">
+                <div class="card-header bg-dark border border-info">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item" style="width: 100%">
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <h5 style="color: white">Lernkarten erstellen fürs Set [{{ set.name }}]</h5>
+                                </div>
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-2">
+                                    <a href="{% url 'web:stats_back' setId=setId %}" class="btn btn-outline-warning d-flex justify-content-right" style="float:right; display:inline-block; max-height: 2.5rem; margin-bottom: 0.5rem; width:100%;" role="button" aria-disabled="false"><p class="text-align: justify;">♻ Stats zurücksetzen </p></a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a href="{% url 'web:bearbeiten' object='set' objectId=setId %}" class="btn btn-outline-danger d-flex justify-content-right" style="float:right; display:inline-block; max-height: 2.5rem; margin-bottom: 0.5rem;" role="button" aria-disabled="false"><p class="text-align: justify;">❌ </p></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item" style="width: 100%">
+                            <div class="bg-dark" style="max-width: 100%; width: 100%">
+                            {% if next_card_id != False %}
+                                <a href={% url 'web:lernen' setId=set.id cardId=next_card_id %} style="width: 100%;" class="btn btn-outline-success border border-3 border-success justify-content-end" role="button">Lernen</a>
+                            {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="list-group bg-dark list-group-flush bg-dark" style="width: 100%; height: 100%;">
+                    <div class="container-fluid bg-dark" style="height: 1rem"></div>
+                    <li class="list-group-item bg-dark" style="max-width: 100%; overflow-x: scroll; max-height: 400px; overflow-y: scroll;">
+
+                        <table class="table table-dark table-hover" style=" width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Fortschritt</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Seite 1</th>
+                                    <th scope="col">Seite 2</th>
+                                    <th scope="col">Eselsbrücke</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for card in cards %}
+                                <tr>
+                                    <td>{{ forloop.counter }}.</td>
+                                    <td>
+                                        <div class="progress bg-dark border border-success" style="margin-top:0.75rem">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width:{{ card.success_points }}%; display:inline" aria-valuenow="{{ card.success_points }}" aria-valuemin="0" aria-valuemax="100"> <h9 style="font-weight: bold; text-align: center;">{{ card.success_points }}%</h9></div>
+                                        </div>
+                                    </td>
+
+                                    <td></td>
+                                    <td>{{ card.txt_front }}</td>
+                                    <td>{{ card.txt_back }}</td>
+                                    <td>{{ card.donkey_bridge }}</td>
+                                    <td><a href="{% url 'web:delete-card' cardOwnerId=fach.user.id cardId=card.id %}" class="btn btn btn-outline-danger d-flex justify-content-right" style="float:right; display:inline-block; max-height: 2.5rem;" role="button" aria-disabled="true"><p class="text-align: justify;">❌</p></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </li>
+                    <li class="list-group-item bg-dark" style="max-width: 100%; overflow-x: scroll; max-height: 100px; overflow-y: scroll;">
+                        <form id="set_form" method="post" action={% url 'web:create_card' %} style="display: flex;">
+                            <input type="number" name="lernset" style="visibility: hidden; display: none; "  value={{ set.id }}>
+                            {% csrf_token %}
+                            {{ card_form }}
+
+                            <button class="btn btn-outline-success default justify-content-end" type="submit">erstellen</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

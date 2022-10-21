@@ -1,0 +1,33 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Einstellungen {% endblock %}
+
+{% block authForm %}
+
+<div class="container pt-5">
+  <div class="card bg-dark border border-info" style="width: 100%;">
+    <div class="card-header bg-dark border border-info">
+      <h3 style="color:white;"> Was bedeutet: [{{ card.txt_front }}]</h3>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item bg-dark">
+        <form method="post" action={% url 'web:antwort' setId=setId cardId=cardId %}>
+          <div class="mb-3" style="margin-top: 0.5rem;">
+            <div class="row">
+            {% csrf_token %}
+              <div class="col-sm-10">
+                <label for="yourAnswer" class="form-label" style="visibility: false; display: none;">Deine Antwort:</label>
+                <input placeholder="Deine Antwort" type="text" name="antwort" class="form-control" id="yourAnswer" required>
+                <div class="form-text">{{ card.donkey_bridge }}</div>
+              </div>
+              <div class="col-sm-2">
+                <button type="submit" class="btn btn-outline-info">senden</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+
+{% endblock %}

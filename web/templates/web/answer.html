@@ -1,0 +1,45 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Einstellungen {% endblock %}
+
+{% block authForm %}
+
+<div class="container pt-5">
+  <div class="card bg-dark border border-light" style="width: 100%;">
+    <div class="card-header bg-dark border border-light">
+      {% if richtig == True %}
+        <h4 style="color: green;"> 🟢 Richtig! Sehr gut! </h4>
+      {% else %}
+        <h4 style="color: red;"> 🔴 Leider Falsch! </h4>
+      {% endif %}
+    </div>
+    <ul class="list-group list-group-flush bg-dark">
+      <li class="list-group-item bg-dark border border-light">
+        {% if richtig == True %}
+          <h6 style="color: white;"> 🟢 Deine Antwort ist richtig! :)</h6>
+          <h6 style="color: white;"> Deine Antwort: "{{ your_antwort }}"</h6>
+        {% else %}
+          <h6 style="color: white;"> 🔴 Deine Antwort ist leider nicht ganz richtig! :( </h6>
+          <h6 style="color: white;"> Deine Antwort: "{{ your_antwort }}"</h6>
+          <h6 style="color: white;"> Richtige Antwort: "{{ card.txt_back }}" </h6>
+        {% endif %}
+      </li>
+      <li class="list-group-item bg-dark border border-light">
+        <form method="post" action={% url 'web:create_process' setId=setId cardId=cardId %}>
+          {% csrf_token %}
+          <input type="text" name="korrektheit" style="visibility: hidden; display: none; "  value={{ richtig }}>
+          <input type="text" name="yourAnswer" style="visibility: hidden; display: none; "  value={{ your_antwort }}>
+          <input type="text" name="correctAnswer" style="visibility: hidden; display: none; "  value={{ card.txt_back }}>
+          {% if richtig != True %}
+          <div class="mb-3 form-check">
+            <input name="verklickt_checkbox" type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label style="color: white;" class="form-check-label" for="exampleCheck1">Verklickt: [als richtig werten]</label>
+          </div>
+          {% endif %}
+        <button class="btn btn-outline-success justify-content-end" type="submit">weiter</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+
+{% endblock %}

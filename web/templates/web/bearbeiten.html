@@ -1,0 +1,50 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Bearbeiten {% endblock %}
+
+{% block authForm %}
+
+{% if object == 'set' %}
+
+<div class="container-fluid" style="color: white; text-align: center;" xmlns="http://www.w3.org/1999/html">
+    <div class="card bg-dark border border-danger" style="width: 100%; margin-top: 1.5rem;">
+        <div class="card-header bg-dark border border-danger">
+            <h5 style="color: red;">Lernset [{{ set.name }}] löschen!</h5>
+        </div>
+        <ul class="list-group list-group-flush bg-dark">
+            <li class="list-group-item bg-dark">
+                <p style="color: white;">Sicher, dass sie das Lernset [{{ set.name }}] löschen wollen?</p>
+            </li>
+            <li class="list-group-item bg-dark">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'web:fach' %}" class="btn btn-outline-success" role="button" aria-pressed="true"> abbrechen </a>
+                    <a href="{% url 'web:delete-set' setId=set.id %}" class="btn btn-outline-danger" role="button" aria-pressed="true"> ❌ Unwiderruflich löschen!</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% else %}
+
+<div class="container-fluid" style="color: white; text-align: center;" xmlns="http://www.w3.org/1999/html">
+    <div class="card bg-dark border border-danger" style="width: 100%; margin-top: 1.5rem;">
+        <div class="card-header border border-danger">
+            <h5 style="color: red;"> Fach [{{ fach.name }}] löschen!</h5>
+        </div>
+        <ul class="list-group list-group-flush bg-dark">
+            <li class="list-group-item bg-dark">
+                <p style="color: white;">Sicher, dass sie das Fach [{{ fach.name }}] löschen wollen?</p>
+            </li>
+            <li class="list-group-item bg-dark">
+                <div class="d-grid gap-2">
+                    <a href="{% url 'web:fach' %}" class="btn btn-outline-success" role="button" aria-pressed="true"> abbrechen </a>
+                    <a href="{% url 'web:delete-fach' fachId=fach.id %}" class="btn btn-outline-danger" role="button" aria-pressed="true"> ❌ Unwiderruflich löschen!</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

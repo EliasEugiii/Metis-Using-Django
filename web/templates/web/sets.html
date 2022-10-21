@@ -1,0 +1,142 @@
+{% extends  'web/base.html' %}
+
+{% block title %} Sets {% endblock %}
+
+{% block authForm %}
+
+<div class="container-fluid" style=" margin-bottom: 100px;">
+    <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card" style="width: 100%;">
+                <div class="card-header bg-dark border border-white" style="color: white">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item" style="width:100%">
+                            <div class="row" style="min-width: 100%;">
+                                <div class="col-sm-6">
+                                    <h4>Metis Lerassistent</h4>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h5>Fach: {{ fach.name }}</h5>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a href="{% url 'web:bearbeiten' object='fach' objectId=fach.id %}" class="btn btn-outline-danger d-flex justify-content-right" style="float:right; display:inline-block; max-height: 2.5rem;" role="button" aria-disabled="false"><p class="text-align: justify;">❌ </p></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="list-group list-group-flush" style="width: 100%;">
+                    <div class="container-fluid bg-dark" style="height: 1rem"></div>
+                    <li class="list-group-item bg-dark" style="max-width: 100%; overflow-x: scroll; max-height: 500px; overflow-y: scroll;">
+
+                                    <table class="table table-dark table-hover" style=" width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Sprache 1</th>
+                                                    <th scope="col">Sprache 2</th>
+                                                    <th scope="col">Beschreibung</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {{ html_sets | safe }}
+                                            </tbody>
+                                    </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" style="width: 100%; height: 100%;">
+                <div class="card-header bg-dark border border-white">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <h5 style="color: white">Neues Lern-Set erstellen</h5>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="list-group bg-dark list-group-flush bg-dark" style="width: 100%; height: 100%;">
+                    <div class="container-fluid bg-dark" style="height: 1rem"></div>
+                    <li class="list-group-item bg-dark" style="height: 100%;">
+                        <div class="card mb-3" style="max-width: 100%; height: 100%;">
+                            <div class="row g-0" style="height: 100%;">
+                                <div class="col-md-12" style="height: 100%;">
+                                    <div class="card-body bg-dark overflow-auto" style="height: 100%;">
+                                        <form id="set_form" method="post" action="{% url 'web:create_set' %}" style="max-height: 400px;">
+                                            <div class="container-fluid bg-transparent col-sm-12" style="height: 1rem"></div>
+                                            <div class="row border border-white bg-dark" style="margin-right: 0.125rem; margin-left: 0.125rem">
+                                                <div class="container-fluid bg-transparent col-sm-12" style="height: 1rem"></div>
+                                                <div class="col">
+                                                    <div class="container-fluid bg-transparent col-sm-12" style="height: 0.25rem"></div>
+                                                    <h5 style="color: white;"> Neues Kapitel/Lernset </h5>
+                                                </div>
+                                                <div class="col" style="display: flex; justify-content: end;">
+                                                    <button class="btn btn-outline-success default justify-content-end" name="save" value="save" type="submit">erstellen</button>
+                                                </div>
+                                                <div class="container-fluid bg-transparent col-sm-12" style="height: 1rem"></div>
+                                            </div>
+                                            <div class="container-fluid bg-transparent" style="height: 1rem"></div>
+                                            <input for="set_form" type="number" name="fach" style="visibility: hidden; display:none;"  value={{ fach.id }}>
+
+                                            {% csrf_token %}
+                                            {{ set_form }}
+
+
+                                                <div class="row container-fluid" style="width: 100%">
+                                                    <div style="height: 3rem"></div>
+                                                    <div class ="card col-sm-12 bg-dark">
+                                                        <div class="btn-group card-body bg-dark border border-light" role="group" aria-label="Basic radio toggle button group" style="max-width: 100%">
+                                                            <div style="diplay:inline" class="col-sm-3">
+                                                                <div style="height:0.5rem;"></div>
+                                                                <h6 style="display:inline; margin-right:1rem; color:white;">1. Sprache:</h6>
+                                                            </div>
+                                                            <div style="diplay:inline; max-width: 100%" class="col-sm-9">
+                                                                <input type="radio" class="btn-check btn-info" style="diplay:inline; width:auto;" value="DE" name="btnradio_lang1" id="btnradio1" autocomplete="off" checked style="diplay:inline">
+                                                                <label class="btn btn-outline-info" for="btnradio1" style="diplay:inline; width:auto;">Deutsch</label>
+
+                                                                <input type="radio" class="btn-check btn-info" style="diplay:inline; width:auto;" value="EN" name="btnradio_lang1" id="btnradio2" autocomplete="off">
+                                                                <label class="btn btn-outline-info" style="diplay:inline; width:auto;" for="btnradio2">Englisch</label>
+
+                                                                <input type="radio" class="btn-check" style="diplay:inline; width:auto;" value="FR" name="btnradio_lang1" id="btnradio3" autocomplete="off">
+                                                                <label class="btn btn-outline-info" style="diplay:inline; width:auto;" for="btnradio3">Französisch</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="height: 1rem"></div>
+                                                    <div class ="card col-sm-12 bg-dark">
+                                                        <div class="btn-group card-body bg-dark border border-light" role="group" aria-label="Basic radio toggle button group" style="max-width: 100%">
+                                                            <div style="diplay:inline" class="col-sm-3">
+                                                                <div style="height:0.5rem;"></div>
+                                                                <h6 style="display:inline; margin-right:1rem; color:white;">2. Sprache:</h6>
+                                                            </div>
+                                                            <div style="diplay:inline" class="col-sm-9">
+                                                                <input type="radio" class="btn-check btn-info" style="diplay:inline; width:auto;" value="DE" name="btnradio_lang2" id="btnradio4" autocomplete="off" checked>
+                                                                <label class="btn btn-outline-info" style="diplay:inline; width:auto;" for="btnradio4">Deutsch</label>
+
+                                                                <input type="radio" class="btn-check btn-info" style="diplay:inline; width:auto;" value="EN" name="btnradio_lang2" id="btnradio5" autocomplete="off">
+                                                                <label class="btn btn-outline-info" style="diplay:inline; width:auto;" for="btnradio5">Englisch</label>
+
+                                                                <input type="radio" class="btn-check" style="diplay:inline; width:auto;" value="FR" name="btnradio_lang2" id="btnradio6" autocomplete="off">
+                                                                <label class="btn btn-outline-info" style="diplay:inline; width:auto;" for="btnradio6">Französisch</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
