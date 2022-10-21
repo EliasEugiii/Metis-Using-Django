@@ -24,7 +24,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
-original_link = BASE_DIR
+original_link = 'https://web-production-7657.up.railway.app/'
 
 @login_required #-->mann kann die Seite nur betreten, wenn man eingolggt ist, ansosten wird man auf login weitergeleitet
 def index(request):
