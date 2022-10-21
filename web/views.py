@@ -15,7 +15,7 @@ from .security import verify_text
 
 from .models import Fach, LernSet, LernKarte, Progress
 from .forms import RegisterForm, LoginForm, FachForm, SetForm, CardForm
-from Metis.Metis.settings import BASE_DIR
+from Metis.settings import BASE_DIR
 # Create your views here.
 
 original_link = BASE_DIR
