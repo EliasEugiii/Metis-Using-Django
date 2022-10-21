@@ -16,6 +16,12 @@ from .security import verify_text
 from .models import Fach, LernSet, LernKarte, Progress
 from .forms import RegisterForm, LoginForm, FachForm, SetForm, CardForm
 from Metis.settings import BASE_DIR
+
+from django.views.decorators.csrf import csrf_exempt
+
+
+
+
 # Create your views here.
 
 original_link = BASE_DIR
@@ -24,6 +30,7 @@ original_link = BASE_DIR
 def index(request):
     return render(request, 'web/base.html')
 
+@csrf_exempt
 def login_view(request):
     if request.user.is_authenticated:
         return redirect(reverse('web:index'))
@@ -39,6 +46,7 @@ def login_view(request):
                 return redirect(reverse('web:index'))
     return render(request, 'web/login.html', {'login_form': login_form})
 
+@csrf_exempt
 @login_required
 def fortschritte_view(request, username):
     user = get_object_or_404(User, username=username)
@@ -47,28 +55,35 @@ def fortschritte_view(request, username):
     else:
         raise Http404('Du hast keinen Zugriff auf diese Stats, bitte wende dich bei Fragen an den Administrator')
 
+@csrf_exempt
 @login_required
 def SA_view(request):
     return render(request, 'web/SA.html')
 
+@csrf_exempt
 @login_required
 def open_sets_view(request):
     return render(request, 'web/open-sets.html')
 
+@csrf_exempt
 @login_required
 def chat_view(request):
     return render(request, 'web/chat.html')
 
+@csrf_exempt
 @login_required
 def testpersonen_view(request):
     return render(request, 'web/testpersonen.html')
 
+@csrf_exempt
 def support_view(request):
     return render(request, 'web/support.html')
 
+@csrf_exempt
 def pw_vergessen(request):
     return render(request, 'web/passwort-vergessen.html')
 
+@csrf_exempt
 def register_view(request):
     if request.user.is_authenticated:
         return redirect(reverse('web:index'))
@@ -88,14 +103,17 @@ def register_view(request):
                 return redirect(reverse('web:index'))
     return render(request, 'web/register.html', {'register_form': register_form})
 
+@csrf_exempt
 def logout_view(request):
     logout(request)
     return redirect(reverse('web:index'))
 
+@csrf_exempt
 @login_required
 def settings_view(request):
     return render(request, 'web/settings.html')
 
+@csrf_exempt
 @login_required
 def post_fach_view(request):
     fach_form = FachForm(request.POST)
@@ -107,6 +125,7 @@ def post_fach_view(request):
         fach.save()
     return HttpResponseRedirect(reverse('web:fach'))
 
+@csrf_exempt
 @login_required
 def fach_view(request):
     html_fach = ''
@@ -139,6 +158,7 @@ def fach_view(request):
             """
     return render(request, 'web/fach.html', {'facher': faecher, 'faecher_user': faecher_user, 'fach_form': fach_form, 'fach_user': fach_user, 'html_fach': html_fach})
 
+@csrf_exempt
 @login_required
 def post_set_view(request):
     set_form = SetForm(request.POST)
@@ -151,6 +171,7 @@ def post_set_view(request):
         set.save()
     return HttpResponseRedirect(reverse('web:sets', kwargs={'username': request.user.username, 'fachId': set.fach.id}))
 
+@csrf_exempt
 @login_required
 def stats_back_view(request, setId):
     set = get_object_or_404(LernSet, id=setId)
@@ -165,7 +186,7 @@ def stats_back_view(request, setId):
     else:
         raise Http404('Du hast keine Berrechtigung diese Stats zu ändern! Bei Fragen wende dich bitte an den Admin.')
 
-
+@csrf_exempt
 @login_required
 def delete_card_view(request, cardOwnerId, cardId):
     card = get_object_or_404(LernKarte, id=cardId)
@@ -178,6 +199,7 @@ def delete_card_view(request, cardOwnerId, cardId):
     else:
         raise Http404('Du hast keine Berrechtigung diese Karte zu löschen. Wende dich bei Fragen an den Admin')
 
+@csrf_exempt
 @login_required
 def sets_view(request, username, fachId):
     user = get_object_or_404(User, username=username)
@@ -200,6 +222,7 @@ def sets_view(request, username, fachId):
     else:
         return HttpResponseRedirect(reverse('web:fach'))
 
+@csrf_exempt
 @login_required
 def cards_view(request, username, fachId, setId):
     user = get_object_or_404(User, username=username)
@@ -215,6 +238,7 @@ def cards_view(request, username, fachId, setId):
         raise Http404('Fehlende Berrechtigung: Du hast kein Zugriffsrecht auf den Inhalt dieses Lernsets. Bei Fragen kannst du dich gerne an den Admin wenden.')
 
 @login_required
+@csrf_exempt
 def post_card_view(request):
     card_form = CardForm(request.POST)
     lernset = LernSet.objects.get(id=request.POST['lernset'])
@@ -225,6 +249,7 @@ def post_card_view(request):
     return HttpResponseRedirect(reverse('web:cards', kwargs={'username': request.user.username, 'fachId': lernset.fach.id, 'setId': lernset.id}))
 
 @login_required
+@csrf_exempt
 def delete_set_form(request, setId):
     set = get_object_or_404(LernSet, id=setId)
     owner = set.fach.user
@@ -235,6 +260,7 @@ def delete_set_form(request, setId):
         raise Http404('Du hast keine Berrechtigung dieses Lernset zu löschen. Wende dich bei Fragen an den Admin')
 
 @login_required
+@csrf_exempt
 def delete_fach_form(request, fachId):
     fach = get_object_or_404(Fach, id=fachId)
     owner = fach.user
@@ -245,6 +271,7 @@ def delete_fach_form(request, fachId):
         raise Http404('Du hast keine Berrechtigung dieses Fach zu löschen. Wende dich bei Fragen an den Admin')
 
 @login_required
+@csrf_exempt
 def bearbeiten_view(request, object, objectId):
     if object == 'set':
         set = get_object_or_404(LernSet, id=objectId)
@@ -293,6 +320,7 @@ def bearbeiten_view(request, object, objectId):
         raise Http404('Fehler 303: Objectname falsch; wenden sie sich bei Fragen an den Admin')
 
 @login_required
+@csrf_exempt
 def lernen_view(request, setId, cardId):
     set = get_object_or_404(LernSet, id=setId)
     card = get_object_or_404(LernKarte, id=cardId)
@@ -431,6 +459,7 @@ def lernen_view(request, setId, cardId):
 
 
 @login_required
+@csrf_exempt
 def antwort_view(request, setId, cardId):
     set = get_object_or_404(LernSet, id=setId)
     card = get_object_or_404(LernKarte, id=cardId)
@@ -439,6 +468,7 @@ def antwort_view(request, setId, cardId):
     return render(request, 'web/answer.html', {'card': card, 'setId': setId, 'cardId': cardId, 'your_antwort': your_antwort, 'richtig': richtig})
 
 @login_required
+@csrf_exempt
 def create_process_view(request, setId, cardId):
     set = get_object_or_404(LernSet, id=setId)
     card = get_object_or_404(LernKarte, id=cardId)
