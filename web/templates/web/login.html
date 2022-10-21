@@ -27,6 +27,9 @@
                                 <h5 class="card-title">Login</h5>
                                 <form method="post" action="">
                                     {% csrf_token %}
+                                    <script>
+                                        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                                    </script>
                                     {{ login_form.as_p }}
                                     <button type="submit" class="btn btn-outline-success">Login</button>
                                 </form>
